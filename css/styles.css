@@ -304,18 +304,34 @@ h5 {
 }
 
 .dropdown-content {
-    display: none;
+    /* Modern Hover Stability Fix */
+    display: block;
+    opacity: 0;
+    visibility: hidden;
     position: absolute;
     background-color: var(--card-bg);
     min-width: 220px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     z-index: 1000;
-    top: 30px;
+    top: 100%;
+    /* Anchor to bottom of button */
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(10px);
     border: 1px solid var(--border);
     padding: 8px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Helper bridge to fix hover gap */
+.dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: transparent;
 }
 
 .dropdown-content a {
@@ -325,16 +341,20 @@ h5 {
     display: block;
     border-radius: 6px;
     font-size: 0.9rem;
-    transition: all 0.2s;
+    transition: all 0.15s;
+    margin-bottom: 2px;
 }
 
 .dropdown-content a:hover {
     background-color: var(--bg-alt);
     color: var(--primary-bright);
+    transform: translateX(2px);
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
 }
 
 /* Arrow indicator */
@@ -342,6 +362,12 @@ h5 {
     content: " ▾";
     font-size: 0.8em;
     margin-left: 4px;
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.dropdown:hover .dropbtn::after {
+    transform: rotate(180deg);
 }
 
 .hamburger {

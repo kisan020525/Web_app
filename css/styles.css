@@ -504,6 +504,40 @@ h5 {
     border-bottom: 1px solid var(--border);
 }
 
+.trust-grid {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.trust-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--primary-bright);
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .trust-grid {
+        gap: 24px;
+        flex-direction: column;
+        align-items: center;
+        /* Stack vertically on mobile */
+    }
+}
+
 /* 5. Clean Cards (Premium) */
 .clean-card {
     background: var(--card-bg);

@@ -277,10 +277,71 @@ h5 {
     font-weight: 500;
     color: var(--text-body);
     font-size: 0.95rem;
+    transition: color 0.1s;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.nav-active {
     color: var(--primary-bright);
+}
+
+/* Dropdown Menu Support */
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    color: var(--text-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--card-bg);
+    min-width: 220px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    z-index: 1000;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid var(--border);
+    padding: 8px;
+}
+
+.dropdown-content a {
+    color: var(--text-body);
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--bg-alt);
+    color: var(--primary-bright);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Arrow indicator */
+.dropbtn::after {
+    content: " ▾";
+    font-size: 0.8em;
+    margin-left: 4px;
 }
 
 .hamburger {

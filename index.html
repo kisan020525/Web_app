@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MDTGVF6TBJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-MDTGVF6TBJ');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AngyOne - Trusted Digital Tools Directory</title>
@@ -347,6 +356,33 @@
     </section>
 
     <!-- 10. Fat Footer -->
+    <!-- 8. Newsletter Section -->
+    <section class="section-padding bg-main">
+        <div class="container">
+            <div class="newsletter-box" style="position: relative; overflow: hidden;">
+                <!-- Decorative Circle -->
+                <div
+                    style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--primary-bright); opacity: 0.1; border-radius: 50%; filter: blur(40px);">
+                </div>
+
+                <h2>Join the Inner Circle</h2>
+                <p class="mb-8"
+                    style="max-width: 600px; margin-left: auto; margin-right: auto; color: var(--text-body);">
+                    Get the latest AI tools and software insights delivered to your inbox. No spam, just value.
+                </p>
+                <form onsubmit="event.preventDefault(); alert('Subscribed! (Integration pending)');"
+                    style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <input type="email" placeholder="Enter your work email" class="hero-search-input"
+                        style="background: var(--bg-main); border: 1px solid var(--border); width: 300px; flex-grow: 0;"
+                        required>
+                    <button type="submit" class="hero-search-btn">Subscribe Free</button>
+                </form>
+                <p style="font-size: 0.85rem; margin-top: 16px; opacity: 0.6;">Join 5,000+ software decision makers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Footer (Unified) -->
     <footer id="footer">
         <div class="container">
             <div class="footer-grid">

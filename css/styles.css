@@ -832,7 +832,92 @@ footer {
     text-transform: uppercase;
 }
 
-/* 12. Editorial / Guide Layout (Coursera Style) */
+/* 13. Decision Engine Layout (Intelligent Simplicity) */
+.decision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 40px;
+}
+
+.decision-card {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+}
+
+.decision-card.pro {
+    border-top: 4px solid #22c55e;
+    /* Green for Pros/Use If */
+}
+
+.decision-card.con {
+    border-top: 4px solid #ef4444;
+    /* Red for Cons/Avoid If */
+}
+
+.decision-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.decision-list {
+    list-style: none;
+    padding: 0;
+}
+
+.decision-list li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: var(--text-body);
+}
+
+.decision-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary-bright);
+    font-weight: bold;
+}
+
+.decision-card.con .decision-list li::before {
+    color: #ef4444;
+}
+
+.decision-card.pro .decision-list li::before {
+    color: #22c55e;
+}
+
+.verdict-box {
+    background: var(--bg-main);
+    border: 2px solid var(--primary-bright);
+    padding: 40px;
+    text-align: center;
+    border-radius: var(--radius-lg);
+    margin-bottom: 60px;
+}
+
+.verdict-large {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 16px;
+    letter-spacing: -0.03em;
+}
+
+@media (max-width: 768px) {
+    .decision-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .article-grid {
     display: grid;
     grid-template-columns: 250px 1fr;

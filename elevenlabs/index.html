@@ -97,120 +97,85 @@
     <section class="section-padding bg-alt">
         <div class="container" style="max-width: 800px;">
 
-            <!-- Verdict & Ratings -->
-            <div class="verdict-card">
-                <div class="verdict-label">AngyOne Verdict</div>
-                <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 250px;">
-                        <h2 style="margin-top: 0;">Our Take</h2>
-                        <p style="font-size: 1.1rem; margin-bottom: 16px;">ElevenLabs is simply
-                            <strong>unmatched</strong> in quality. If you need realistic voices for YouTube or Ads,
-                            there is no second place. It's expensive, but worth it.
-                        </p>
-                        <p><strong>Best For:</strong> YouTubers, Content Creators, Authors.</p>
-                    </div>
-                    <div style="flex: 1; min-width: 250px;">
-                        <div class="rating-row">
-                            <span class="rating-label">Voice Quality</span>
-                            <div class="rating-track">
-                                <div class="rating-fill" style="width: 100%;"></div>
-                            </div>
-                            <span class="rating-score">10</span>
-                        </div>
-                        <div class="rating-row">
-                            <span class="rating-label">Ease of Use</span>
-                            <div class="rating-track">
-                                <div class="rating-fill" style="width: 90%;"></div>
-                            </div>
-                            <span class="rating-score">9.0</span>
-                        </div>
-                        <div class="rating-row">
-                            <span class="rating-label">Speed</span>
-                            <div class="rating-track">
-                                <div class="rating-fill" style="width: 95%;"></div>
-                            </div>
-                            <span class="rating-score">9.5</span>
-                        </div>
-                        <div class="rating-row">
-                            <span class="rating-label">Price</span>
-                            <div class="rating-track">
-                                <div class="rating-fill" style="width: 70%;"></div>
-                            </div>
-                            <span class="rating-score">7.0</span>
-                        </div>
-                    </div>
+            <!-- 1. The Verdict (Bottom Line Up Front) -->
+            <div class="verdict-box">
+                <span class="section-label" style="justify-content: center; display: flex;">AngyOne Verdict</span>
+                <div class="verdict-large">The "Ferrari" of AI Voice</div>
+                <p style="font-size: 1.25rem; max-width: 600px; margin: 0 auto 32px; color: var(--text-body);">
+                    ElevenLabs is the undisputed leader in quality. If you want audio that <strong>fools
+                        humans</strong>, this is the only choice.
+                    However, it is expensive. Casual users should use the free tier only.
+                </p>
+                <div class="rating-row" style="max-width: 300px; margin: 0 auto; justify-content: center; gap: 16px;">
+                    <span style="font-weight: 700; font-size: 1.1rem;">Voice Quality:</span>
+                    <span
+                        style="background: var(--primary-bright); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 700;">10/10</span>
                 </div>
             </div>
 
-            <div class="mb-8">
-                <h2>What is ElevenLabs?</h2>
-                <p>ElevenLabs is an AI audio research and deployment company. Their mission is to make content
-                    universally accessible in any language and voice.</p>
+            <!-- 2. The Decision Grid (Use vs Avoid) -->
+            <div class="decision-grid">
+                <!-- PROS -->
+                <div class="decision-card pro">
+                    <div class="decision-title">✅ Use ElevenLabs If...</div>
+                    <ul class="decision-list">
+                        <li><strong>Quality is #1:</strong> You are a faceless YouTuber, podcaster, or author who cannot
+                            afford "robotic" voices.</li>
+                        <li><strong>You need Multi-Lingual:</strong> It auto-detects language and keeps the same voice
+                            accent.</li>
+                        <li><strong>You want to Clone your Voice:</strong> The "Instant Cloning" works with just 1
+                            minute of audio.</li>
+                    </ul>
+                </div>
+
+                <!-- CONS -->
+                <div class="decision-card con">
+                    <div class="decision-title">❌ Avoid ElevenLabs If...</div>
+                    <ul class="decision-list">
+                        <li><strong>You have a Huge Word Count:</strong> Long audiobooks will get expensive fast ($0.30
+                            per 1k characters adds up).</li>
+                        <li><strong>You need a Video Editor:</strong> It produces audio files only. It is not a video
+                            editor like Descript.</li>
+                        <li><strong>You are broke:</strong> Free tier is generous (10k chars), but you enter credit card
+                            land quickly.</li>
+                    </ul>
+                </div>
             </div>
 
+            <!-- 3. Pricing Data (No Fluff) -->
             <div class="clean-card mb-8">
-                <h3>Why we like it</h3>
-                <ul style="list-style: disc; padding-left: 24px; color: var(--text-body);">
-                    <li class="mb-2"><strong>Unmatched Quality:</strong> The intonation, pauses, and emotion are better
-                        than any competitor.</li>
-                    <li class="mb-2"><strong>Voice Cloning:</strong> You can clone your own voice with just a minute of
-                        audio sample.</li>
-                    <li class="mb-2"><strong>Great Free Tier:</strong> 10,000 characters per month for free.</li>
-                </ul>
-            </div>
-
-            <div class="clean-card mb-8" style="border-color: #ef4444;">
-                <h3 style="color: #ef4444;">The Downsides</h3>
-                <ul style="list-style: disc; padding-left: 24px; color: var(--text-body);">
-                    <li class="mb-2"><strong>Expensive:</strong> High quality comes at a cost, especially for long
-                        books.</li>
-                    <li class="mb-2"><strong>Credit System:</strong> Re-generating a bad take still uses credits.</li>
-                </ul>
-            </div>
-
-            <div class="mb-8">
-                <h2>Competition Check</h2>
+                <h2 style="margin-bottom: 24px;">The Cost of Quality</h2>
                 <div class="comparison-container">
                     <table class="compare-table">
                         <thead>
                             <tr>
-                                <th>Feature</th>
-                                <th>ElevenLabs</th>
-                                <th>Murf.ai</th>
-                                <th>Speechify</th>
+                                <th>Plan</th>
+                                <th>Cost</th>
+                                <th>What You Get</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Voice Realism</strong></td>
-                                <td><strong>10/10</strong></td>
-                                <td>8/10</td>
-                                <td>7/10</td>
+                                <td><strong>Free</strong></td>
+                                <td>$0</td>
+                                <td>10k characters/mo. No Commercial License.</td>
                             </tr>
                             <tr>
-                                <td><strong>Voice Cloning</strong></td>
-                                <td><span class="check-icon">✓ Instant</span></td>
-                                <td><span class="cross-icon">Slow</span></td>
-                                <td><span class="check-icon">✓ Yes</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Starting Price</strong></td>
+                                <td><strong>Starter</strong></td>
                                 <td>$5/mo</td>
-                                <td>$29/mo</td>
-                                <td>$11/mo</td>
+                                <td>30k characters. Instant Voice Cloning. Commercial Rights.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Creator</strong></td>
+                                <td>$22/mo</td>
+                                <td>100k characters. Highest quality audio output.</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <div class="mb-8">
-                <h2>Pricing Summary</h2>
-                <div class="clean-card">
-                    <p><strong>Free:</strong> $0/mo (10k chars/mo)</p>
-                    <p><strong>Starter:</strong> $5/mo (30k chars + Cloning)</p>
-                    <p><strong>Creator:</strong> $22/mo (100k chars + High quality)</p>
-                </div>
+                <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-body);">
+                    <strong>Pro Tip:</strong> Most YouTubers start with the $5 plan. If you go viral, upgrade to $22.
+                </p>
             </div>
 
             <div class="text-center" style="margin-top: 64px;">

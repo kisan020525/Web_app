@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngyOne - Trusted Digital Tools Directory</title>
+    <meta name="description"
+        content="Unbiased reviews of the best digital software for efficiency, marketing, and design. 100% independent and reader-supported.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AngyOne - Trusted Digital Tools Directory">
+    <meta property="og:description"
+        content="Unbiased reviews of the best digital software for efficiency, marketing, and design.">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AngyOne - Trusted Digital Tools Directory">
+    <meta property="twitter:description" content="Unbiased reviews of the best digital software.">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- SEO: Truth Architecture (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "AngyOne",
+      "url": "https://angyone.com",
+      "logo": "https://angyone.com/assets/logo.png",
+      "description": "Unbiased reviews of the best digital software for efficiency, marketing, and design.",
+      "sameAs": []
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "AngyOne Directory",
+      "url": "https://angyone.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://angyone.com/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- 1. Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">AngyOne</a>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link nav-active">Home</a>
+                <a href="#tools" class="nav-link">Tools</a>
+                <a href="guides/email-marketing-101.html" class="nav-link">Guides</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#footer" class="nav-link">Contact</a>
+                <button id="theme-toggle" class="btn-theme" aria-label="Toggle Dark Mode">
+                    <!-- Icon injected by JS -->
+                </button>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <button id="theme-toggle-mobile" class="btn-theme mobile-only" style="display: none;"
+                    aria-label="Toggle Dark Mode">
+                    <!-- Icon injected by JS -->
+                </button>
+                <div class="hamburger">☰</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section (Split Layout) -->
+    <section id="hero" class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1>We find the best tools <br>so you don't have to.</h1>
+                <p>Simple explanations for complex software. No jargon, just clear decisions.</p>
+
+                <div class="hero-search-container">
+                    <input type="text" class="hero-search-input" placeholder="Search for tools (e.g. Email, AI)..." />
+                    <button class="hero-search-btn">Search</button>
+                </div>
+
+                <p style="font-size: 0.9rem; opacity: 0.7;">
+                    Popular: <a href="#tools" style="text-decoration: underline;">AI Voice</a>, <a href="#tools"
+                        style="text-decoration: underline;">Email Marketing</a>, <a href="#tools"
+                        style="text-decoration: underline;">CRM</a>
+                </p>
+            </div>
+
+            <div class="hero-visual">
+                <!-- Abstract Dashboard Visual (CSS Only) -->
+                <div class="visual-card card-2"></div>
+                <div class="visual-card card-3"></div>
+                <div class="visual-card card-1">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                        <div style="width: 40px; height: 10px; background: rgba(255,255,255,0.2); border-radius: 4px;">
+                        </div>
+                        <div style="width: 10px; height: 10px; background: rgba(255,255,255,0.2); border-radius: 50%;">
+                        </div>
+                    </div>
+                    <div class="ui-circle"></div>
+                    <div class="ui-line" style="width: 80%;"></div>
+                    <div class="ui-line" style="width: 60%;"></div>
+                    <div class="ui-line" style="width: 70%;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2.5 Mission Strip -->
+    <div class="trust-strip">
+        <div class="container text-center">
+            <p
+                style="font-size: 0.85rem; color: #666; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
+                100% Independent &nbsp; • &nbsp; No Sponsored Rankings &nbsp; • &nbsp; Reader Supported
+            </p>
+        </div>
+    </div>
+
+    <!-- 3. Featured Spotlight (NEW) -->
+    <section class="section-padding" style="padding-bottom: 0;">
+        <div class="container">
+            <div class="featured-spotlight">
+                <div class="spotlight-content">
+                    <span class="spotlight-label">Featured Tool of the Month</span>
+                    <h2 style="font-size: 2.5rem; margin-bottom: 16px; color: white;">ElevenLabs</h2>
+                    <p style="margin-bottom: 32px; font-size: 1.1rem; opacity: 0.9;">The most realistic AI voice
+                        generator on the market. Change the way you create audio content forever.</p>
+                    <a href="elevenlabs/index.html" class="btn btn-primary"
+                        style="background: white; color: var(--primary);">Read Full Review</a>
+                </div>
+                <div class="spotlight-visual">
+                    <img src="assets/img/elevenlabs-wave.png" alt="ElevenLabs Voice AI Visualization"
+                        style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Categories Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="text-center mb-8">
+                <p class="section-label">Browse by Category</p>
+            </div>
+            <div class="category-grid">
+                <div class="category-tag">Marketing</div>
+                <div class="category-tag">Artificial Intelligence</div>
+                <div class="category-tag">CRM Software</div>
+                <div class="category-tag">Productivity</div>
+                <div class="category-tag">Design Tools</div>
+                <div class="category-tag">Video Editing</div>
+                <div class="category-tag">Web Hosting</div>
+                <div class="category-tag">E-commerce</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Why AngyOne -->
+    <section class="section-padding bg-alt">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2>Why creators trust us</h2>
+            </div>
+            <div class="features-grid">
+                <div class="clean-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>We Research</h3>
+                    <p>We spend hours reading documentation so you don't have to.</p>
+                </div>
+                <div class="clean-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>We Simplify</h3>
+                    <p>We strip away the marketing fluff and tell you the facts.</p>
+                </div>
+                <div class="clean-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3>We Are Neutral</h3>
+                    <p>We simply inform you so you can make the best choice.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Tools Section (Expanded) -->
+    <section id="tools" class="section-padding">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 style="font-size: 2.5rem; font-weight: 700;">Curated Directory</h2>
+                <p style="color: var(--text-body);">Hand-picked software to help you grow.</p>
+            </div>
+
+            <div class="tools-grid">
+                <!-- 1. Brevo -->
+                <div class="clean-card">
+                    <div class="tool-header">
+                        <h3>Brevo</h3>
+                        <span class="tool-badge">Marketing</span>
+                    </div>
+                    <p class="mb-4">The all-in-one platform for email, SMS, and chat.</p>
+                    <a href="brevo/index.html" class="tool-link">Read Analysis <span>→</span></a>
+                </div>
+
+                <!-- 2. ElevenLabs -->
+                <div class="clean-card">
+                    <div class="tool-header">
+                        <h3>ElevenLabs</h3>
+                        <span class="tool-badge">Voice AI</span>
+                    </div>
+                    <p class="mb-4">Create realistic AI speech in any language.</p>
+                    <a href="elevenlabs/index.html" class="tool-link">Read Analysis <span>→</span></a>
+                </div>
+
+                <!-- 3. Notion -->
+                <div class="clean-card">
+                    <div class="tool-header">
+                        <h3>Notion</h3>
+                        <span class="tool-badge">Productivity</span>
+                    </div>
+                    <p class="mb-4">The connected workspace for wiki, docs, and projects.</p>
+                    <a href="#" class="tool-link">Waitlist <span>→</span></a>
+                </div>
+
+                <!-- 4. Zapier -->
+                <div class="clean-card">
+                    <div class="tool-header">
+                        <h3>Zapier</h3>
+                        <span class="tool-badge">Automation</span>
+                    </div>
+                    <p class="mb-4">Automate workflows by connecting your apps.</p>
+                    <a href="#" class="tool-link">Waitlist <span>→</span></a>
+                </div>
+
+                <!-- 5. Linear (New) -->
+                <div class="clean-card">
+                    <div class="tool-header">
+                        <h3>Linear</h3>
+                        <span class="tool-badge">Project Mgmt</span>
+                    </div>
+                    <p class="mb-4">The issue tracking tool for high-performance teams.</p>
+                    <a href="#" class="tool-link">Waitlist <span>→</span></a>
+                </div>
+
+                <!-- 6. Shopify (New) -->
+                <div class="clean-card">
+                    <div class="tool-header">
+                        <h3>Shopify</h3>
+                        <span class="tool-badge">Commerce</span>
+                    </div>
+                    <p class="mb-4">The best platform to start an online store.</p>
+                    <a href="#" class="tool-link">Waitlist <span>→</span></a>
+                </div>
+
+                <!-- 7. Webflow (New) -->
+                <div class="clean-card">
+                    <div class="tool-header">
+                        <h3>Webflow</h3>
+                        <span class="tool-badge">Design</span>
+                    </div>
+                    <p class="mb-4">Build custom websites visually without code.</p>
+                    <a href="#" class="tool-link">Waitlist <span>→</span></a>
+                </div>
+
+                <!-- 8. Figma (New) -->
+                <div class="clean-card">
+                    <div class="tool-header">
+                        <h3>Figma</h3>
+                        <span class="tool-badge">Design</span>
+                    </div>
+                    <p class="mb-4">The interface design tool for teams.</p>
+                    <a href="#" class="tool-link">Waitlist <span>→</span></a>
+                </div>
+            </div>
+
+            <div class="text-center" style="margin-top: 48px;">
+                <button class="btn btn-secondary">Load More Tools</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Methodology Section -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Unbiased Reviews</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">Data</div>
+                    <div class="stat-label">Backed Analysis</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">Daily</div>
+                    <div class="stat-label">Market Updates</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. FAQ Section -->
+    <section class="section-padding bg-alt">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">Do you guys sell these tools?</div>
+                    <div class="faq-answer">No, we are an independent directory. We research and review tools to help
+                        you find the best fit.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How do you select the tools?</div>
+                    <div class="faq-answer">We look for tools with high user ratings, fair pricing, and reliable
+                        support.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is AngyOne free to use?</div>
+                    <div class="faq-answer">Yes! Our research is 100% free for you to read.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Newsletter Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="newsletter-box">
+                <h2>Stay ahead of the curve</h2>
+                <p>Get the latest tool reviews and digital insights delivered to your inbox.</p>
+                <div class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email" />
+                    <button class="newsletter-btn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Fat Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Col 1 -->
+                <div class="footer-col">
+                    <a href="#" class="logo" style="margin-bottom: 16px; display: block;">AngyOne</a>
+                    <p style="color: var(--text-body); font-size: 0.9rem;">Essential intelligence for the digital age.
+                        We simplify software decisions for businesses.</p>
+                </div>
+                <!-- Col 2 -->
+                <div class="footer-col">
+                    <h4>Directory</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="#tools">All Tools</a></li>
+                        <li><a href="#tools">Marketing</a></li>
+                        <li><a href="#tools">Productivity</a></li>
+                        <li><a href="#tools">AI & Voice</a></li>
+                    </ul>
+                </div>
+                <!-- Col 3 -->
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#about">Our Methodology</a></li>
+                        <li><a href="mailto:hello@angyone.com">Contact</a></li>
+                    </ul>
+                </div>
+                <!-- Col 4 -->
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom" style="flex-direction: column; align-items: start; gap: 16px;">
+                <div class="legal-disclaimer"
+                    style="font-size: 0.8rem; color: var(--text-body); opacity: 0.8; line-height: 1.5;">
+                    <p style="margin-bottom: 8px;"><strong>Affiliate Disclosure:</strong> AngyOne is an independent
+                        directory. We may earn a commission when you buy through links on our site. This helps us
+                        maintain our free content.</p>
+                    <p><strong>Trademark Disclaimer:</strong> All trademarks, logos and brand names are the property of
+                        their respective owners. All company, product and service names used in this website are for
+                        identification purposes only. Use of these names, trademarks and brands does not imply
+                        endorsement.</p>
+                </div>
+                <div style="width: 100%; border-top: 1px solid var(--border); margin-bottom: 16px;"></div>
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                    <div class="copyright">
+                        &copy; <span id="year">2025</span> AngyOne Inc. All rights reserved.
+                    </div>
+                    <div class="links">
+                        <a href="#" style="margin-right: 16px;">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

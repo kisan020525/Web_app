@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TOOL_NAME}} - Review by AngyOne</title>
+    <meta name="description"
+        content="Unbiased review of {{TOOL_NAME}}. Features, pricing, pros, cons, and our honest verdict.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- SEO: Product Review Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "{{TOOL_NAME}}",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "{{RATING_SCORE}}",
+        "ratingCount": "100"
+      },
+      "review": {
+        "@type": "Review",
+        "author": {
+          "@type": "Organization",
+          "name": "AngyOne"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "{{RATING_SCORE}}",
+          "bestRating": "10"
+        },
+        "reviewBody": "{{VERDICT_SUMMARY}}"
+      }
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- 1. Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">AngyOne</a>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../index.html#tools" class="nav-link">Tools</a>
+                <a href="../guides/email-marketing-101.html" class="nav-link">Guides</a>
+                <a href="../index.html#about" class="nav-link">About</a>
+                <a href="../index.html#footer" class="nav-link">Contact</a>
+                <button id="theme-toggle" class="btn-theme" aria-label="Toggle Dark Mode">
+                    <!-- Icon injected by JS -->
+                </button>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <button id="theme-toggle-mobile" class="btn-theme mobile-only" style="display: none;"
+                    aria-label="Toggle Dark Mode">
+                    <!-- Icon injected by JS -->
+                </button>
+                <div class="hamburger">☰</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Tool Hero -->
+    <section class="hero" style="min-height: 50vh;">
+        <div class="hero-content">
+            <div style="margin-bottom: 16px;">
+                <span class="tool-badge"
+                    style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white;">{{TOOL_CATEGORY}}</span>
+            </div>
+            <h1>{{TOOL_NAME}}</h1>
+            <p>{{TOOL_TAGLINE}}</p>
+            <div class="hero-buttons">
+                <a href="{{AFFILIATE_LINK}}" target="_blank" class="btn btn-primary"
+                    style="background-color: white; color: var(--primary);">Visit Website</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Tool Details -->
+    <section class="section-padding bg-alt">
+        <div class="container" style="max-width: 800px;">
+
+            <!-- Verdict & Ratings -->
+            <div class="verdict-card" style="margin-bottom: 60px;">
+                <div class="verdict-label">AngyOne Verdict</div>
+                <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <h2 style="margin-top: 0;">Our Take</h2>
+                        <p style="font-size: 1.1rem; margin-bottom: 16px;">{{VERDICT_FULL_TEXT}}</p>
+                        <p><strong>Best For:</strong> {{BEST_FOR_AUDIENCE}}</p>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <!-- Rating 1 -->
+                        <div class="rating-row">
+                            <span class="rating-label">Features</span>
+                            <div class="rating-track">
+                                <div class="rating-fill" style="width: {{RATING_1_PERCENT}}%;"></div>
+                            </div>
+                            <span class="rating-score">{{RATING_1_SCORE}}</span>
+                        </div>
+                        <!-- Rating 2 -->
+                        <div class="rating-row">
+                            <span class="rating-label">Ease of Use</span>
+                            <div class="rating-track">
+                                <div class="rating-fill" style="width: {{RATING_2_PERCENT}}%;"></div>
+                            </div>
+                            <span class="rating-score">{{RATING_2_SCORE}}</span>
+                        </div>
+                        <!-- Rating 3 -->
+                        <div class="rating-row">
+                            <span class="rating-label">Value</span>
+                            <div class="rating-track">
+                                <div class="rating-fill" style="width: {{RATING_3_PERCENT}}%;"></div>
+                            </div>
+                            <span class="rating-score">{{RATING_3_SCORE}}</span>
+                        </div>
+                        <!-- Rating 4 -->
+                        <div class="rating-row">
+                            <span class="rating-label">Support</span>
+                            <div class="rating-track">
+                                <div class="rating-fill" style="width: {{RATING_4_PERCENT}}%;"></div>
+                            </div>
+                            <span class="rating-score">{{RATING_4_SCORE}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What is it -->
+            <div class="mb-8">
+                <h2>What is {{TOOL_NAME}}?</h2>
+                <p>{{TOOL_DESCRIPTION}}</p>
+            </div>
+
+            <!-- Pros -->
+            <div class="clean-card mb-8">
+                <h3>Why we like it</h3>
+                <ul style="list-style: disc; padding-left: 24px; color: var(--text-body);">
+                    <li class="mb-2"><strong>Pro 1:</strong> {{PRO_1_TEXT}}</li>
+                    <li class="mb-2"><strong>Pro 2:</strong> {{PRO_2_TEXT}}</li>
+                    <li class="mb-2"><strong>Pro 3:</strong> {{PRO_3_TEXT}}</li>
+                </ul>
+            </div>
+
+            <!-- Cons -->
+            <div class="clean-card mb-8" style="border-color: #ef4444;">
+                <h3 style="color: #ef4444;">The Downsides</h3>
+                <ul style="list-style: disc; padding-left: 24px; color: var(--text-body);">
+                    <li class="mb-2"><strong>Con 1:</strong> {{CON_1_TEXT}}</li>
+                    <li class="mb-2"><strong>Con 2:</strong> {{CON_2_TEXT}}</li>
+                </ul>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="mb-8">
+                <h2>Competition Check</h2>
+                <div class="comparison-container">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>{{TOOL_NAME}}</th>
+                                <th>{{COMPETITOR_1}}</th>
+                                <th>{{COMPETITOR_2}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Price</strong></td>
+                                <td><strong>{{PRICE_MAIN}}</strong></td>
+                                <td>{{PRICE_COMP_1}}</td>
+                                <td>{{PRICE_COMP_2}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Key Feature 1</strong></td>
+                                <td><span class="check-icon">✓ Yes</span></td>
+                                <td><span class="cross-icon">✕ No</span></td>
+                                <td><span class="check-icon">✓ Yes</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Key Feature 2</strong></td>
+                                <td><span class="check-icon">✓ Yes</span></td>
+                                <td><span class="check-icon">✓ Yes</span></td>
+                                <td><span class="cross-icon">✕ No</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="mb-8">
+                <h2>Pricing Summary</h2>
+                <div class="clean-card">
+                    <p><strong>Free Plan:</strong> {{PRICING_FREE_DETAILS}}</p>
+                    <p><strong>Paid Plan:</strong> {{PRICING_PAID_DETAILS}}</p>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center" style="margin-top: 64px;">
+                <a href="{{AFFILIATE_LINK}}" target="_blank" class="btn btn-primary">Go to {{TOOL_NAME}} Website
+                    <span>→</span></a>
+                <p style="font-size: 0.875rem; color: var(--text-body); margin-top: 16px; opacity: 0.7;">We simply
+                    inform. We do not sell this tool.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. Footer (Unified) -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Col 1 -->
+                <div class="footer-col">
+                    <a href="#" class="logo" style="margin-bottom: 16px; display: block;">AngyOne</a>
+                    <p style="color: var(--text-body); font-size: 0.9rem;">Essential intelligence for the digital age.
+                    </p>
+                </div>
+                <!-- Col 2 -->
+                <div class="footer-col">
+                    <h4>Directory</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="../index.html#tools">All Tools</a></li>
+                        <li><a href="../index.html#tools">Marketing</a></li>
+                    </ul>
+                </div>
+                <!-- Col 3 -->
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="mailto:hello@angyone.com">Contact</a></li>
+                    </ul>
+                </div>
+                <!-- Col 4 -->
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom" style="flex-direction: column; align-items: start; gap: 16px;">
+                <div class="legal-disclaimer"
+                    style="font-size: 0.8rem; color: var(--text-body); opacity: 0.8; line-height: 1.5;">
+                    <p style="margin-bottom: 8px;"><strong>Affiliate Disclosure:</strong> AngyOne is an independent
+                        directory. We may earn a commission when you buy through links on our site.</p>
+                    <p><strong>Trademark Disclaimer:</strong> {{TOOL_NAME}}® is a trademark of its respective owner. We
+                        are not
+                        affiliated with {{TOOL_NAME}} directly unless stated. Use of names is for identification only.
+                    </p>
+                </div>
+                <div style="width: 100%; border-top: 1px solid var(--border); margin-bottom: 16px;"></div>
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                    <div class="copyright">
+                        &copy; <span id="year">2025</span> AngyOne Inc. All rights reserved.
+                    </div>
+                    <div class="links">
+                        <a href="../index.html">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

@@ -561,7 +561,8 @@ h5 {
 
 /* Featured Spotlight (NEW) */
 .featured-spotlight {
-    background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
+    /* Always use dark gradient, even in dark mode, to support white text */
+    background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%);
     border-radius: var(--radius-lg);
     padding: 60px;
     color: white;
@@ -571,6 +572,8 @@ h5 {
     margin-bottom: 80px;
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Subtle border for definition */
 }
 
 .spotlight-content {

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://angyone.com/sitemap.xml
+Sitemap: https://angyone.cloud/sitemap.xml

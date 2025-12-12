@@ -265,6 +265,18 @@ h5 {
     font-weight: 800;
     color: var(--text-main);
     letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img {
+    height: 55px;
+    /* Increased size per user request */
+    width: auto;
+    display: block;
+    margin-top: -3px;
+    /* Visual balance */
 }
 
 .nav-links {

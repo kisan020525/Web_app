@@ -1,3 +1,6 @@
 praw
 python-dotenv
 colorama
+selenium
+webdriver-manager
+google-generativeai

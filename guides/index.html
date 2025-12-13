@@ -35,9 +35,38 @@
             </a>
             <div class="nav-links">
                 <a href="../index.html#hero" class="nav-link">Home</a>
-                <a href="../index.html#tools" class="nav-link">Tools</a>
-                <a href="index.html" class="nav-link nav-active">Guides</a>
-                <a href="../about.html" class="nav-link">About</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Tools</button>
+                    <div class="dropdown-content">
+                        <a href="../brevo/">Brevo</a>
+                        <a href="../elevenlabs/">ElevenLabs</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="../index.html#tools">All Tools</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Comparisons</button>
+                    <div class="dropdown-content">
+                        <a href="../comparisons/brevo-vs-mailchimp/">Brevo vs Mailchimp</a>
+                        <a href="../comparisons/clickup-vs-alternatives/">ClickUp vs All</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="../comparisons/">View Hub</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn nav-active">Guides</button>
+                    <div class="dropdown-content">
+                        <a href="email-marketing-101/">Email Tech 101</a>
+                        <a href="state-of-ai-2025/">State of AI 2025</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="nav-active">View Hub</a>
+                    </div>
+                </div>
+
+                <a href="../about/" class="nav-link">About</a>
                 <a href="../index.html#footer" class="nav-link">Contact</a>
                 <button id="theme-toggle" class="btn-theme" aria-label="Toggle Dark Mode">
                     <!-- Icon injected by JS -->

@@ -346,6 +346,11 @@ h5 {
     background: transparent;
 }
 
+.dropdown-divider {
+    border-top: 1px solid var(--border);
+    margin: 4px 0;
+}
+
 .dropdown-content a {
     color: var(--text-body);
     padding: 10px 16px;

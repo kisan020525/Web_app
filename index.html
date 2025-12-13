@@ -100,17 +100,37 @@
             </a>
             <div class="nav-links">
                 <a href="#hero" class="nav-link nav-active">Home</a>
-                <a href="comparisons/" class="nav-link">Comparisons</a> <!-- Added Link -->
-                <a href="#tools" class="nav-link">Tools</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Tools</button>
+                    <div class="dropdown-content">
+                        <a href="brevo/">Brevo</a>
+                        <a href="elevenlabs/">ElevenLabs</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#tools">All Tools</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Comparisons</button>
+                    <div class="dropdown-content">
+                        <a href="comparisons/brevo-vs-mailchimp/">Brevo vs Mailchimp</a>
+                        <a href="comparisons/clickup-vs-alternatives/">ClickUp vs All</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="comparisons/">View Hub</a>
+                    </div>
+                </div>
+
                 <div class="dropdown">
                     <button class="dropbtn">Guides</button>
                     <div class="dropdown-content">
                         <a href="guides/email-marketing-101/">Email Tech 101</a>
-                        <a href="guides/">All Guides</a>
-                        <div style="border-top: 1px solid var(--border); margin: 4px 0;"></div>
-                        <a href="guides/state-of-ai-2025/" style="color: var(--primary);">State of AI 2025</a>
+                        <a href="guides/state-of-ai-2025/">State of AI 2025</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="guides/">View Hub</a>
                     </div>
                 </div>
+
                 <a href="about/" class="nav-link">About</a>
                 <a href="#footer" class="nav-link">Contact</a>
                 <button id="theme-toggle" class="btn-theme" aria-label="Toggle Dark Mode">

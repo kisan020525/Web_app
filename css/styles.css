@@ -413,6 +413,48 @@ h5 {
     .nav-links.active {
         display: flex;
     }
+
+    /* Mobile Dropdown Fix */
+    .dropdown {
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .dropbtn {
+        width: 100%;
+        justify-content: space-between;
+        padding: 10px 0;
+        font-weight: 600;
+        color: var(--primary);
+        /* Highlight headers */
+    }
+
+    .dropdown-content {
+        position: static;
+        /* Flow in document */
+        width: 100%;
+        min-width: unset;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        padding: 0 0 0 16px;
+        /* Indent links */
+        display: block;
+        /* Always Show on Mobile */
+        margin-bottom: 16px;
+    }
+
+    .dropdown-content a {
+        padding: 8px 0;
+        font-size: 0.95rem;
+        color: var(--text-body);
+    }
+
+    /* Hide the 'View Hub' links on mobile to save space? Optional. Keeping for now. */
 }
 
 /* 4. Hero Section (Split Layout) */

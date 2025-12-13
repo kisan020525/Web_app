@@ -414,6 +414,10 @@ h5 {
         overflow-y: auto;
     }
 
+    .hamburger {
+        display: block;
+    }
+
     .nav-links.active {
         display: flex;
     }

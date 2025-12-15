@@ -133,6 +133,42 @@
     <section class="section-padding bg-alt">
         <div class="container" style="max-width: 800px;">
 
+            <!-- 🛡️ The "Stress Test" Protocol (Human Verification) -->
+            <div class="stress-test-card"
+                style="background: #FFF5F5; border: 1px solid #FEB2B2; border-radius: 12px; padding: 24px; margin-bottom: 40px;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <div
+                        style="background: #C53030; color: white; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase;">
+                        Human Verified
+                    </div>
+                    <h2 style="margin: 0; font-size: 1.25rem; color: #9B2C2C;">The "Break-It" Test</h2>
+                </div>
+                <p style="margin-bottom: 20px; color: #742A2A;">We don't just read the website. We try to break the
+                    tool. Here is what happened when we pushed {{TOOL_NAME}} to the limit on
+                    <strong>{{CURRENT_DATE}}</strong>:</p>
+
+                <div style="display: grid; gap: 16px;">
+                    <!-- Test 1 -->
+                    <div style="background: white; padding: 16px; border-radius: 8px; border-left: 4px solid #F56565;">
+                        <strong style="display: block; color: #2D3748; margin-bottom: 4px;">🔬 Test 1:
+                            {{TEST_1_TITLE}}</strong>
+                        <span style="font-size: 0.95rem; color: #4A5568;">{{TEST_1_RESULT}}</span>
+                    </div>
+                    <!-- Test 2 -->
+                    <div style="background: white; padding: 16px; border-radius: 8px; border-left: 4px solid #ED8936;">
+                        <strong style="display: block; color: #2D3748; margin-bottom: 4px;">🔥 Test 2: Support Response
+                            Time</strong>
+                        <span style="font-size: 0.95rem; color: #4A5568;">{{TEST_2_RESULT}}</span>
+                    </div>
+                    <!-- Test 3 -->
+                    <div style="background: white; padding: 16px; border-radius: 4px; border-left: 4px solid #48BB78;">
+                        <strong style="display: block; color: #2D3748; margin-bottom: 4px;">✅ Test 3:
+                            {{TEST_3_TITLE}}</strong>
+                        <span style="font-size: 0.95rem; color: #4A5568;">{{TEST_3_RESULT}}</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Verdict & Ratings -->
             <div class="verdict-card" style="margin-bottom: 60px;">
                 <div class="verdict-label">AngyOne Verdict</div>

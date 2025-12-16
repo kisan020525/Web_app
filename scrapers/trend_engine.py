@@ -1,3 +1,4 @@
+
 import google.generativeai as genai
 import os
 import datetime
@@ -10,319 +11,483 @@ except ImportError:
     TrendReq = None
 
 # --- CONFIGURATION ---
-GOOGLE_SEARCH_API_KEY = "AIzaSyCLS_mgYXyyZBZXurEBeMxbvQe5q3NvGZk" # User Provided
-GOOGLE_SEARCH_CX = "e51ec8cb44bd54574" # Configured ✅
-GEMINI_API_KEY = "AIzaSyByC8Le1NRDhpzfjOwTGavCSgyip7lD14k" # User Provided
+# --- CONFIGURATION ---
+GEMINI_API_KEY = "AIzaSyDDVn8NFcByjaOh4BoDok1AfXccn4zGsBE"
 
 # Configure Gemini
 try:
+    print(f"🔑 Configuring Gemini with Key ending in: ...{GEMINI_API_KEY[-4:]}")
     genai.configure(api_key=GEMINI_API_KEY)
 except Exception as e:
     print(f"⚠️ Gemini Config Error: {e}")
 
-class TrendEngine:
+class TrendEngineV2:
     def __init__(self):
         self.site_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        # TESTING MODE: Output to separate folder
-        self.trends_dir = os.path.join(self.site_root, 'trends_test')
+        # Using real 'trends' directory for production, or 'trends_dev' for testing
+        self.trends_dir = os.path.join(self.site_root, 'trends') 
         if not os.path.exists(self.trends_dir):
             os.makedirs(self.trends_dir)
-        print(f"🤖 TrendEngine Output Dir: {self.trends_dir}")
+        print(f"🤖 TrendEngine 2.0 Output Dir: {self.trends_dir}")
+        self.load_template()
 
-    def get_rising_trends(self):
-        """
-        Step 1: Detect Trends using PYTRENDS (Free).
-        """
-        print("📊 Connecting to Google Trends via Pytrends...")
-        
-        if not TrendReq:
-            print("❌ Pytrends library missing. Using Mock Data.")
-            return [{"query": "DeepSeek vs ChatGPT", "velocity": "Mock High"}]
-
+    def load_template(self):
+        """Loads the NEW News/Editorial HTML template."""
+        # Using the new template file we just created
+        template_path = os.path.join(self.site_root, 'templates', 'news-article-template.html')
         try:
-            pytrends = TrendReq(hl='en-US', tz=360)
-            trending_searches_df = pytrends.trending_searches(pn='united_states')
-            top_trends = trending_searches_df.head(3)[0].tolist()
-            print(f"🔥 Detected Trends: {top_trends}")
-            return [{"query": t, "velocity": "High"} for t in top_trends]
+            with open(template_path, 'r', encoding='utf-8') as f:
+                self.template_html = f.read()
+            print("✅ News Article Template Loaded.")
         except Exception as e:
-            print(f"⚠️ Pytrends Error: {e}")
-            return [{"query": "AI Marketing Tools 2025", "velocity": "Fallback"}]
+            print(f"❌ Template Load Error: {e}")
+            self.template_html = "<html><body><h1>Error: Template Missing</h1></body></html>"
 
-    def research_topic(self, topic):
+    def scan_deep_trends(self):
         """
-        Step 2: Gather Ground Truth (Google Custom Search API).
+        Step 1: Get Real-Time Trends from Google News RSS.
+        Reliable Source: https://news.google.com/rss/search?q=technology
         """
-        print(f"🔍 Researching topic: {topic}...")
-        
-        if "YOUR_SEARCH_ENGINE_ID" in GOOGLE_SEARCH_CX:
-             print("⚠️ Missing Search Engine ID (CX). Using Mock Data.")
-             return {"summary": f"Research for {topic} (Mock).", "source": "Mock"}
-
+        print("📡 Scanning Real-Time News (30+ Sources)...")
+        candidates = []
         try:
             import requests
-            url = f"https://www.googleapis.com/customsearch/v1?key={GOOGLE_SEARCH_API_KEY}&cx={GOOGLE_SEARCH_CX}&q={topic}"
-            res = requests.get(url).json()
+            import xml.etree.ElementTree as ET
             
-            if 'items' in res:
-                snippets = [item['snippet'] for item in res['items'][:3]]
-                summary = " ".join(snippets)
-                print(f"✅ Found {len(snippets)} sources.")
-                return {"summary": summary, "source": "Google API"}
-            else:
-                print("⚠️ No results found via API.")
-                return {"summary": f"No detailed research found for {topic}.", "source": "None"}
+            # Google News RSS (Technology / India)
+            rss_url = "https://news.google.com/rss/search?q=technology&hl=en-IN&gl=IN&ceid=IN:en"
+            
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            }
+            
+            response = requests.get(rss_url, headers=headers, timeout=10)
+            
+            if response.status_code == 200:
+                root = ET.fromstring(response.content)
+                for item in root.findall('.//item'):
+                    title = item.find('title').text
+                    # Clean title (Remove source name like ' - Reuters')
+                    clean_title = title.split(' - ')[0]
+                    candidates.append(clean_title)
                 
+                print(f"✅ Found {len(candidates)} fresh news items.")
+            else:
+                print(f"⚠️ RSS Failed (Status {response.status_code}). Switching to fallback.")
+            
+            # Deduplicate and limit
+            candidates = list(set(candidates))[:50]
+            
+            if not candidates:
+                 raise Exception("No news found in RSS.")
+                 
+            return candidates
+    
         except Exception as e:
-            print(f"⚠️ Search API Error: {e}")
-            return {"summary": f"Research failed for {topic}.", "source": "Error"}
+            print(f"⚠️ Scan Error: {e}")
+            return ["DeepSeek vs OpenAI", "Indian SaaS Growth 2025", "NVIDIA vs AMD Stock", "AI Agents for Business"] # Fallback
 
-    def generate_article(self, topic, research_data):
+    def ai_thinker_select_one(self, candidates):
         """
-        Step 3: AI Writing (Gemini 2.5 Flash Lite).
+        Step 2: The 'Thinker' - Pick ONLY ONE best trend for NEWS REPORTING.
+        User Request: "Not affilaite... just give information... work as news provider"
         """
-        print(f"✍️ Asking Gemini (2.5-flash-lite) to write about: {topic}...")
-        date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+        if not candidates:
+             print("⚠️ No candidates found. Using emergency fallback.")
+             candidates = ["DeepSeek", "ChatGPT-5", "NVIDIA AI"]
+
+        print("🧠 'Thinker' Mode: Analyzing 50 trends for Breaking Tech News...")
         
         prompt = f"""
-        Act as an expert tech journalist for AngyOne.
-        Write a full HTML page analyzing this trend: '{topic}'.
+        Act as a Tech News Editor.
+        I have a list of trending topics in India/Tech:
+        {candidates}
         
-        Research Context:
-        {research_data['summary']}
+        Your Goal: Pick EXACTLY ONE topic that is:
+        1. "Breaking News" worthy (high curiosity).
+        2. Relevant to Tech/AI/Business.
+        3. Educational/Informative.
         
-        Requirements:
-        1. Use the AngyOne HTML structure (Navbar, Hero, Container).
-        2. Tone: Skeptical, data-driven, "Stress Test" style.
-        3. Include a "Why it matters" section.
-        4. Return ONLY the HTML code, no markdown backticks.
+        Ignore: Salesy software reviews. We want pure information/news.
+        
+        Return ONLY the topic name as a plain string. Nothing else.
         """
-
+        
         try:
-            # Using the specific model requested by the user
-            model = genai.GenerativeModel('gemini-2.5-flash-lite')
-            response = model.generate_content(prompt)
-            html_content = response.text
-            
-            # Basic cleanup if model adds markdown
-            html_content = html_content.replace("```html", "").replace("```", "")
-            return html_content
-            
+            model = genai.GenerativeModel('gemini-2.5-flash-lite') 
+            res = model.generate_content(prompt)
+            chosen_topic = res.text.strip().replace('"', '').replace("'", "")
+            print(f"🎯 Thinker Selected: {chosen_topic}")
+            return chosen_topic
         except Exception as e:
-            print(f"⚠️ Gemini Generation Error: {e}")
-            # Fallback template if AI fails
-            return f"<html><body><h1>Error generating content for {topic}</h1><p>{e}</p></body></html>"
+            print(f"⚠️ Thinker Fallback (API Error): {e}")
+            return candidates[0]
 
-    def publish_article(self, topic, html_content):
+    def generate_grounded_page(self, topic):
         """
-        Step 4: Save to File.
+        Step 3 & 6: Search Grounding + Image Sourcing + News Template.
+        Using Gemini Tools: google_search
         """
-        slug = topic.lower().replace(" ", "-")[:50] # Limit filename length
-        filename = f"{slug}.html"
-        filepath = os.path.join(self.trends_dir, filename)
+        print(f"✍️ Generating Full HTML for: {topic} (Grounding Enabled)...")
         
+        # Test 'google_search' string (Standard in 1.5+)
+        tools = 'google_search' 
+        
+        try:
+            model = genai.GenerativeModel('gemini-2.5-flash-lite', tools=tools)
+        except Exception as e:
+            print(f"⚠️ Tool Init Error: {e}")
+            model = genai.GenerativeModel('gemini-2.5-flash-lite')
+        
+        prompt = f"""
+        Act as a Tech Reporter (News Only).
+        Topic: "{topic}" 
+        
+        Task: Write a high-quality Breaking News Article about this topic.
+        Target Audience: Tech enthusiasts, Founders, Developers.
+        Style: Informative, Unbiased, "TechCrunch" style. NO SALES.
+        
+        Use this EXACT HTML TEMPLATE structure:
+        
+        {self.template_html}
+        
+        INSTRUCTIONS:
+        1. {{HEADLINE}}: Catchy news headline (e.g. "Why X is Exploding...").
+        2. {{SUBTITLE}}: 2-sentence summary/hook.
+        3. {{DATE_PUBLISHED}}: Today's date (e.g. Dec 16, 2025).
+        4. {{SUMMARY_SNIPPET}}: Meta description.
+        5. {{KEY_POINTS_LIST_ITEMS}}: 3-4 <li> items summarizing the key facts.
+        6. {{ARTICLE_CONTENT_HTML}}: The full article body (approx 600 words). Use <h2> for subheadings and <p> for text. Focus on "What happened", "Why it matters", "What's next".
+        
+        Output: ONLY Valid HTML code with placeholders filled.
+        """
+        
+        try:
+            response = model.generate_content(prompt)
+            # Gemini might return grounded metadata, we want the text (HTML)
+            html = response.text.replace("```html", "").replace("```", "")
+            return html
+        except Exception as e:
+            print(f"❌ Generation Error: {e}")
+            return None
+
+    def publish_and_inject(self, topic, html_content):
+        """
+        Step 4 & 7: Save file as Clean URL (slug/index.html), Update Hub, Update Nav.
+        """
+        if not html_content or len(html_content) < 500:
+            print("⚠️ Content too short or empty. Aborting publish.")
+            return
+
+        date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+        slug = topic.lower().replace(" ", "-").replace("/", "-").replace(".", "")[:40]
+        
+        # 1. Create Directory for Clean URL: trends/slug/
+        page_dir = os.path.join(self.trends_dir, slug)
+        if not os.path.exists(page_dir):
+            os.makedirs(page_dir)
+            
+        filename = "index.html"
+        filepath = os.path.join(page_dir, filename)
+        
+        # FIX RELATIVE PATHS:
+        # Template assumes it's in trends/page.html (depth 1), so using "../css/"
+        # Now it is in trends/slug/index.html (depth 2), need "../../css/"
+        html_content = html_content.replace('href="../css/', 'href="../../css/')
+        html_content = html_content.replace('src="../js/', 'src="../../js/')
+        html_content = html_content.replace('src="../assets/', 'src="../../assets/')
+        html_content = html_content.replace('href="../index.html"', 'href="../../index.html"')
+        
+        # Save HTML
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(html_content)
+        print(f"💾 Saved Clean URL: trends/{slug}/")
         
-        print(f"[DONE] Saved HTML: {filename}")
+        # Inject into Hub and Nav
+        self.update_hub_page(topic, f"{slug}/", date_str)
+        self.update_navbar(topic, f"trends/{slug}/")
         
-        # Step 4b: Update the Hub Page
-        self.update_trends_hub(topic, filename, datetime.datetime.now().strftime("%Y-%m-%d"))
+        # [NEW] SEO & Ticker Optimization
+        self.update_sitemap(slug)
+        self.update_homepage_feed(topic, f"trends/{slug}/", date_str)
         
-        # Step 4c: Update the Global Navigation
-        self.update_global_nav(topic, filename)
-        
-        return filename
+        return slug
 
-    def update_trends_hub(self, topic, filename, date_str):
+    def update_sitemap(self, slug):
         """
-        Step 4b: Safely inject link into trends/index.html
+        Appends the new clean URL to sitemap.xml for Google Indexing.
         """
-        hub_path = os.path.join(self.trends_dir, "index.html")
-        if not os.path.exists(hub_path):
-            print("[WARN] Hub page not found. Skipping link injection.")
-            return
-
-        print(f"[LINK] Updating Hub Page: {hub_path}")
+        sitemap_path = os.path.join(self.site_root, "sitemap.xml")
         try:
-            with open(hub_path, "r", encoding="utf-8") as f:
+            with open(sitemap_path, "r", encoding="utf-8") as f:
                 content = f.read()
-
-            # The Card to Inject
-            new_card = f"""
-                <!-- {topic} -->
-                <article class="trend-card">
-                    <div class="trend-meta">
-                        <span class="trend-badge">New Arrival</span>
-                        <time>{date_str}</time>
-                    </div>
-                    <h2 class="trend-title"><a href="{filename}" style="text-decoration: none; color: inherit;">{topic}</a></h2>
-                    <p class="trend-snippet">Latest market intelligence generated by AngyOne Autonomous Engine.</p>
-                    <a href="{filename}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Read Report →</a>
-                </article>
-            """
-
-            # Injection Point: After <div id="trend-feed">
-            if '<div id="trend-feed">' in content:
-                updated_content = content.replace('<div id="trend-feed">', '<div id="trend-feed">' + new_card)
-                
-                with open(hub_path, "w", encoding="utf-8") as f:
-                    f.write(updated_content)
-                print("[DONE] Hub Page Updated!")
-            else:
-                print("[WARN] Could not find insertion point <div id='trend-feed'>")
-
+            
+            # Simple append before </urlset>
+            new_url = f"""
+    <url>
+        <loc>https://angyone.com/trends/{slug}/</loc>
+        <lastmod>{datetime.datetime.now().strftime("%Y-%m-%d")}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>"""
+            
+            if slug not in content:
+                if "</urlset>" in content:
+                    content = content.replace("</urlset>", new_url + "\n</urlset>")
+                    with open(sitemap_path, "w", encoding="utf-8") as f:
+                        f.write(content)
+                    print("✅ SEO: Added to Sitemap.")
         except Exception as e:
-            print(f"[ERROR] Failed to update hub: {e}")
+            print(f"❌ Sitemap Update Error: {e}")
 
-    def update_global_nav(self, topic, filename):
+    def update_homepage_feed(self, topic, link, date_str):
         """
-        Step 4c: Update the Logic for Main Menu Injection.
+        Injects a 'Breaking News' card into the index.html ticker.
+        Target: <!-- DYNAMIC_NEWS_FEED -->
         """
         index_path = os.path.join(self.site_root, "index.html")
-        
-        if not os.path.exists(index_path):
-            print(f"[WARN] Index page not found at {index_path}. Skipping nav injection.")
-            return
-
-        print(f"[LINK] Updating Global Nav: {index_path}")
         try:
             with open(index_path, "r", encoding="utf-8") as f:
                 content = f.read()
             
-            # Use relative path for main menu
-            rel_link = f"trends/{filename}"
-            new_link = f'<a href="{rel_link}">{topic}</a>'
+            marker = '<!-- DYNAMIC_NEWS_FEED -->'
             
-            # Injection Point: <a href="trends/">Live Feed</a>
-            target = '<a href="trends/">Live Feed</a>'
+            # Simple Card Design
+            new_card = f"""
+            <div class="news-card" style="background: var(--bg-main); padding: 16px; border-radius: 8px; border: 1px solid var(--border);">
+                <div style="font-size: 0.75rem; opacity: 0.6; margin-bottom: 8px;">{date_str}</div>
+                <h4 style="margin: 0; font-size: 1rem; line-height: 1.4;">
+                    <a href="{link}" style="color: var(--text-main); text-decoration: none;">{topic}</a>
+                </h4>
+            </div>
+            """
             
-            if target in content:
-                # Add BEFORE the "Live Feed" link
-                updated_content = content.replace(target, new_link + "\n                        " + target)
+            if marker in content:
+                # Prepend to keep freshest first? OR Append?
+                # Let's prepend to the marker so it appears first if we structure it right,
+                # actually 'replace marker with marker + new' puts it after.
+                # To make it appear top/left, we should insert AFTER the marker.
+                # And since regular grid flows left-to-right, new items will appear first if we insert them immediately after marker.
+                
+                # Check dupe
+                if link in content:
+                    return
+
+                replacement = f'{marker}\n{new_card}'
+                new_content = content.replace(marker, replacement)
                 
                 with open(index_path, "w", encoding="utf-8") as f:
-                    f.write(updated_content)
-                print("[DONE] Global Nav Updated!")
-            else:
-                print("[WARN] Could not find 'Live Feed' link in index.html to attach to.")
-
+                    f.write(new_content)
+                print("✅ Homepage: Added to News Ticker.")
+                
         except Exception as e:
-            print(f"[ERROR] Failed to update nav: {e}")
+            print(f"❌ Ticker Update Error: {e}")
 
-    def git_push(self):
-        """
-        Step 5: AWS Deployment Sync.
-        """
-        print("[SYNC] Syncing to GitHub...")
-        try:
-            subprocess.run(["git", "add", "."], cwd=self.site_root, check=True)
-            subprocess.run(["git", "commit", "-m", "TrendEngine Auto-Publish"], cwd=self.site_root, check=True)
-            subprocess.run(["git", "push"], cwd=self.site_root, check=True)
-            print("[DONE] Successfully pushed to GitHub Pages!")
-        except Exception as e:
-            print(f"[WARN] Git Sync Failed: {e}")
-
-    def run_agentic_cycle(self):
-        print("[START] Starting Trend Engine (Agentic Mode)...")
+    def update_hub_page(self, topic, link_href, date_str):
+        # (Simplified Hub Injection Logic - Same as v1 but robust)
+        hub_path = os.path.join(self.trends_dir, "index.html")
+        if not os.path.exists(hub_path):
+            with open(hub_path, "w", encoding="utf-8") as f:
+                f.write(f"""
+                <html><head><link rel="stylesheet" href="../css/styles.css"></head>
+                <body><div class="container"><h1>Global Trend Feed</h1><div id="trend-feed"></div></div></body></html>
+                """)
         
-        # 1. SCOUT: Get Raw Candidates
-        candidates = self.get_rising_trends() # Returns list of strings
+        with open(hub_path, "r", encoding="utf-8") as f:
+            content = f.read()
+            
+        new_entry = f"""
+        <div class="trend-card" style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 20px;">
+            <div style="font-size: 0.8rem; opacity: 0.6;">{date_str}</div>
+            <h3><a href="{link_href}">{topic}</a></h3>
+        </div>
+        """
+        
+        if '<div id="trend-feed">' in content:
+            new_content = content.replace('<div id="trend-feed">', '<div id="trend-feed">' + new_entry)
+            with open(hub_path, "w", encoding="utf-8") as f:
+                f.write(new_content)
+            print("✅ Hub Feed Updated.")
+
+    def update_navbar(self, topic, link_href):
+        """
+        Injects the new trend link into the 'Trends' dropdown in index.html.
+        Robust Version: Uses <!-- DYNAMIC_TREND_LINKS --> marker.
+        """
+        index_path = os.path.join(self.site_root, "index.html")
+        try:
+            with open(index_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            
+            # Target Marker
+            marker = '<!-- DYNAMIC_TREND_LINKS -->'
+            
+            # New Link to Inject
+            # link_href is passed as relative path e.g. 'trends/slug/'
+            new_link = f'<a href="{link_href}">{topic}</a>'
+            
+            if marker in content:
+                # Check if link already exists to avoid duplicates
+                if f'href="{link_href}"' in content:
+                    print(f"⚠️ Navbar link for {topic} already exists. Skipping.")
+                else:
+                    # Inject AFTER the marker
+                    replacement = f'{marker}\n                        {new_link}'
+                    new_content = content.replace(marker, replacement)
+                    
+                    with open(index_path, "w", encoding="utf-8") as f:
+                        f.write(new_content)
+                    print(f"✅ Navbar Updated: Added '{topic}' to Homepage.")
+            else:
+                print("⚠️ Navbar Marker '<!-- DYNAMIC_TREND_LINKS -->' not found. Add it to index.html to enable auto-updates.")
+
+        except Exception as e:
+            print(f"❌ Navbar Update Error: {e}")
+
+    
+    def push_to_github(self):
+        """
+        Pushes changes to GitHub using REST API (No Git required).
+        Uses Personal Access Token for authentication.
+        """
+        print("🐙 Starting GitHub Sync (API Mode)...")
+        
+        # Configuration - Token from Environment Variable
+        GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
+        if not GITHUB_TOKEN:
+            print("⚠️ GITHUB_TOKEN not set. Skipping push. Set it with: set GITHUB_TOKEN=your_token")
+            return
+        REPO_OWNER = "kisan020525"
+        REPO_NAME = "Web_app"
+        BRANCH = "main"
+        
+        import requests
+        import base64
+        import glob
+        
+        api_base = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}"
+        headers = {
+            "Authorization": f"token {GITHUB_TOKEN}",
+            "Accept": "application/vnd.github.v3+json"
+        }
+        
+        try:
+            # Find all files that need to be pushed (trends folder + index.html + sitemap)
+            files_to_push = []
+            
+            # Add trends folder files
+            trends_path = os.path.join(self.site_root, "trends")
+            for filepath in glob.glob(os.path.join(trends_path, "**", "*"), recursive=True):
+                if os.path.isfile(filepath):
+                    rel_path = os.path.relpath(filepath, self.site_root).replace("\\", "/")
+                    files_to_push.append((filepath, rel_path))
+            
+            # Add index.html and sitemap
+            files_to_push.append((os.path.join(self.site_root, "index.html"), "index.html"))
+            files_to_push.append((os.path.join(self.site_root, "sitemap.xml"), "sitemap.xml"))
+            
+            pushed_count = 0
+            for local_path, github_path in files_to_push:
+                if not os.path.exists(local_path):
+                    continue
+                    
+                with open(local_path, "rb") as f:
+                    content = base64.b64encode(f.read()).decode()
+                
+                # Get current file SHA (if exists)
+                sha = None
+                check_url = f"{api_base}/contents/{github_path}?ref={BRANCH}"
+                resp = requests.get(check_url, headers=headers)
+                if resp.status_code == 200:
+                    sha = resp.json().get("sha")
+                
+                # Create/Update file
+                update_url = f"{api_base}/contents/{github_path}"
+                data = {
+                    "message": f"Auto-Update: {github_path}",
+                    "content": content,
+                    "branch": BRANCH
+                }
+                if sha:
+                    data["sha"] = sha
+                
+                resp = requests.put(update_url, headers=headers, json=data)
+                if resp.status_code in [200, 201]:
+                    pushed_count += 1
+                else:
+                    print(f"⚠️ Failed to push {github_path}: {resp.status_code}")
+            
+            print(f"✅ Pushed {pushed_count} files to GitHub.")
+            
+        except Exception as e:
+            print(f"❌ GitHub API Error: {e}")
+
+    def run_daily_cycle(self):
+        print("🚀 Starting Trend Engine v2.0 (Batch Mode)...")
+        # 1. Scan
+        candidates = self.scan_deep_trends()
+        
         if not candidates:
-            print("[SLEEP] No trends found.")
+            print("⚠️ No topics found. Exiting.")
             return
 
-        # 2. EDITOR: AI Decides what's worth writing
-        print(f"[AI] AI Editor analyzing {len(candidates)} candidates...")
-        selected_topics = self.ai_select_best_trends(candidates)
+        # [NEW] History Guard: Don't repeat topics covered recently
+        history_path = os.path.join(self.site_root, "trend_history.log")
+        covered_topics = []
+        if os.path.exists(history_path):
+            with open(history_path, "r", encoding="utf-8") as f:
+                covered_topics = f.read().splitlines()
         
-        # 3. EXECUTE: Loop through the chosen few (Max 2)
-        for topic in selected_topics[:2]:
-            print(f"[PROC] Processing Appproved Topic: {topic}")
-            
-            # 3a. STRATEGIST: Ask AI what to search
-            search_query = self.ai_generate_search_query(topic)
-            
-            # 3b. RESEARCHER: Execute Search
-            research_data = self.research_topic(search_query)
-            
-            # 3c. WRITER: Generate Content
-            html = self.generate_article(topic, research_data)
-            self.publish_article(topic, html)
+        # Filter candidates against history
+        # (Fuzzy matching or exact string? Let's use exact string for news titles)
+        filtered_candidates = [c for c in candidates if c not in covered_topics]
+        
+        if not filtered_candidates:
+            print("⏳ All current trends have been covered. Waiting for fresh news...")
+            return
 
-    def get_rising_trends(self):
-        """
-        Step 1: Detect Trends using Google Trends RSS (India).
-        """
-        print("[INFO] Fetching Indian trends via RSS...")
-        import requests
-        import xml.etree.ElementTree as ET
+        # Generator Loop: Create 1 Article per Run (Scheduler Friendly)
+        MAX_ARTICLES = 1
 
-        try:
-            # RSS Feed for India
-            rss_url = "https://trends.google.com/trends/trendingsearches/daily/rss?geo=IN"
-            response = requests.get(rss_url)
+        generated_count = 0
+        used_topics = []
+        
+        while generated_count < MAX_ARTICLES:
+            print(f"\n--- 🔄 Generating {generated_count+1}/{MAX_ARTICLES} ---")
             
-            if response.status_code == 200:
-                root = ET.fromstring(response.content)
-                trends = []
-                # Parse XML
-                for item in root.findall('.//item'):
-                    title = item.find('title').text
-                    trends.append(title)
+            # Filter candidates against run-session used_topics AND global history
+            # Note: filtered_candidates already filtered Global History.
+            # We just need to filter 'used_topics' (this run).
+            current_candidates = [c for c in filtered_candidates if c not in used_topics]
+            
+            if not current_candidates:
+                print("⚠️ No more unique candidates.")
+                break
                 
-                print(f"[DATA] Detected India Trends: {trends[:5]}")
-                return trends
-            else:
-                 print(f"[WARN] RSS Failed: {response.status_code}")
-                 
-        except Exception as e:
-            print(f"[ERROR] Trend Detection Error: {e}")
+            # Pick Topic (News Focus)
+            topic = self.ai_thinker_select_one(current_candidates)
+            if topic in used_topics:
+                print(f"⚠️ Duplicate topic {topic} selected. Skipping.")
+                continue
+                
+            used_topics.append(topic)
+            
+            # Generate
+            html = self.generate_grounded_page(topic)
+            if html:
+                slug = self.publish_and_inject(topic, html)
+                if slug:
+                    generated_count += 1
+                    # [NEW] Log to History immediately
+                    with open(history_path, "a", encoding="utf-8") as f:
+                        f.write(topic + "\n")
+                    time.sleep(2) # Politeness delay
         
-        print("[WARN] Using Fallback Trend List.")
-        return ["Zepto vs Blinkit", "Zoho pricing", "Indian SaaS 2025", "UPI updates"]
-
-    def ai_select_best_trends(self, candidates):
-        """Step 2: AI Filters the list (Indian Context)"""
-        prompt = f"""
-        You are the Editor-in-Chief of 'AngyOne India'.
-        Here is a list of potential trending topics in India:
-        {candidates}
+        print(f"\n🏁 Batch Complete. Generated {generated_count} articles.")
         
-        Pick the TOP 2 topics that are most relevant to: 
-        1. Technology / AI
-        2. Business / Startups (e.g., IPOs, earnings)
-        3. Marketing / SaaS
-        
-        Ignore: Politics, Bollywood, Cricket (unless it implies a major tech/business angle).
-        
-        Return ONLY a Python list of strings, e.g.: ["Topic A", "Topic B"]
-        """
-        try:
-            model = genai.GenerativeModel('gemini-2.5-flash-lite')
-            res = model.generate_content(prompt)
-            # clean cleanup to get list
-            clean_text = res.text.replace("```json", "").replace("```python", "").replace("```", "").strip()
-            # Simple fallback parsing if calc fails
-            if "[" in clean_text:
-                return eval(clean_text) 
-            return candidates[:2] 
-        except Exception as e:
-            print(f"[WARN] AI Filter Error: {e}")
-            return candidates[:2]
-
-    def ai_generate_search_query(self, topic):
-        """Step 3a: AI crafts the perfect search query"""
-        prompt = f"For the topic '{topic}', write ONE exact Google Search query to find recent facts, pricing, or controversy. Return ONLY the query."
-        try:
-            model = genai.GenerativeModel('gemini-2.5-flash-lite')
-            res = model.generate_content(prompt)
-            return res.text.strip().replace('"', '')
-        except:
-            return topic # Fallback
-
+        if generated_count > 0:
+            self.push_to_github()
 
 if __name__ == "__main__":
-    engine = TrendEngine()
-    # engine.run_cycle() # Old mode
-    engine.run_agentic_cycle() # New Agentic Mode
+    engine = TrendEngineV2()
+    engine.run_daily_cycle()

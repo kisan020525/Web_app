@@ -66,4 +66,20 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+
+
+
+    <url>
+        <loc>https://angyone.com/trends/the-great-ai-hype-correction-of-2025/</loc>
+        <lastmod>2025-12-16</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://angyone.com/trends/mark-zuckerberg-admits-his-biggest-bet-f/</loc>
+        <lastmod>2025-12-16</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>

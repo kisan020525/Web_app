@@ -345,10 +345,10 @@ class TrendEngineV2:
             print(f"❌ Navbar Update Error: {e}")
 
     
-    def push_to_github(self):
+    def push_to_github(self, created_slugs=None):
         """
         Pushes changes to GitHub using REST API (No Git required).
-        Uses Personal Access Token for authentication.
+        Only pushes specific files that were created/modified in this run.
         """
         print("🐙 Starting GitHub Sync (API Mode)...")
         
@@ -363,7 +363,6 @@ class TrendEngineV2:
         
         import requests
         import base64
-        import glob
         
         api_base = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}"
         headers = {
@@ -372,17 +371,22 @@ class TrendEngineV2:
         }
         
         try:
-            # Find all files that need to be pushed (trends folder + index.html + sitemap)
+            # Build list of files to push (only what was created this run)
             files_to_push = []
             
-            # Add trends folder files
-            trends_path = os.path.join(self.site_root, "trends")
-            for filepath in glob.glob(os.path.join(trends_path, "**", "*"), recursive=True):
-                if os.path.isfile(filepath):
-                    rel_path = os.path.relpath(filepath, self.site_root).replace("\\", "/")
-                    files_to_push.append((filepath, rel_path))
+            # Add specific trend files that were created
+            if created_slugs:
+                for slug in created_slugs:
+                    trend_file = os.path.join(self.site_root, "trends", slug, "index.html")
+                    if os.path.exists(trend_file):
+                        files_to_push.append((trend_file, f"trends/{slug}/index.html"))
             
-            # Add index.html and sitemap
+            # Add trends/index.html (hub page)
+            hub_file = os.path.join(self.site_root, "trends", "index.html")
+            if os.path.exists(hub_file):
+                files_to_push.append((hub_file, "trends/index.html"))
+            
+            # Add index.html and sitemap (always updated)
             files_to_push.append((os.path.join(self.site_root, "index.html"), "index.html"))
             files_to_push.append((os.path.join(self.site_root, "sitemap.xml"), "sitemap.xml"))
             
@@ -451,6 +455,7 @@ class TrendEngineV2:
 
         generated_count = 0
         used_topics = []
+        created_slugs = []  # [NEW] Track slugs created this run
         
         while generated_count < MAX_ARTICLES:
             print(f"\n--- 🔄 Generating {generated_count+1}/{MAX_ARTICLES} ---")
@@ -478,7 +483,8 @@ class TrendEngineV2:
                 slug = self.publish_and_inject(topic, html)
                 if slug:
                     generated_count += 1
-                    # [NEW] Log to History immediately
+                    created_slugs.append(slug)  # [NEW] Track the slug
+                    # Log to History immediately
                     with open(history_path, "a", encoding="utf-8") as f:
                         f.write(topic + "\n")
                     time.sleep(2) # Politeness delay
@@ -486,7 +492,7 @@ class TrendEngineV2:
         print(f"\n🏁 Batch Complete. Generated {generated_count} articles.")
         
         if generated_count > 0:
-            self.push_to_github()
+            self.push_to_github(created_slugs)  # [NEW] Pass slugs to push
 
 if __name__ == "__main__":
     engine = TrendEngineV2()

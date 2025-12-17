@@ -310,8 +310,8 @@ class TrendEngineV2:
                 <span class="trend-time">Published: {date_str}</span>
             </div>
             <h3><a href="{link_href}">{topic}</a></h3>
-            <p class="trend-snippet">AI-generated analysis and insights on this trending topic. Click to read the full auto-report.</p>
-            <a href="{link_href}" class="read-more">Read Auto-Report →</a>
+            <p class="trend-snippet">Comprehensive analysis covering key developments, industry impact, and what it means for tech professionals.</p>
+            <a href="{link_href}" class="read-more">Read Full Report →</a>
         </div>
         """
         

@@ -311,38 +311,13 @@ class TrendEngineV2:
 
     def update_navbar(self, topic, link_href):
         """
-        Injects the new trend link into the 'Trends' dropdown in index.html.
-        Robust Version: Uses <!-- DYNAMIC_TREND_LINKS --> marker.
+        Previously injected individual links into Trends dropdown.
+        Now simplified: Articles are discoverable via 'Live Feed' link to trends hub.
+        This prevents navbar overflow with 12+ articles/day.
         """
-        index_path = os.path.join(self.site_root, "index.html")
-        try:
-            with open(index_path, "r", encoding="utf-8") as f:
-                content = f.read()
-            
-            # Target Marker
-            marker = '<!-- DYNAMIC_TREND_LINKS -->'
-            
-            # New Link to Inject
-            # link_href is passed as relative path e.g. 'trends/slug/'
-            new_link = f'<a href="{link_href}">{topic}</a>'
-            
-            if marker in content:
-                # Check if link already exists to avoid duplicates
-                if f'href="{link_href}"' in content:
-                    print(f"⚠️ Navbar link for {topic} already exists. Skipping.")
-                else:
-                    # Inject AFTER the marker
-                    replacement = f'{marker}\n                        {new_link}'
-                    new_content = content.replace(marker, replacement)
-                    
-                    with open(index_path, "w", encoding="utf-8") as f:
-                        f.write(new_content)
-                    print(f"✅ Navbar Updated: Added '{topic}' to Homepage.")
-            else:
-                print("⚠️ Navbar Marker '<!-- DYNAMIC_TREND_LINKS -->' not found. Add it to index.html to enable auto-updates.")
-
-        except Exception as e:
-            print(f"❌ Navbar Update Error: {e}")
+        # No longer add individual links to dropdown to prevent overflow
+        # The hub page (trends/index.html) shows all articles
+        print(f"ℹ️ Article added to Hub Page (Navbar simplified - use 'Live Feed' link).")
 
     
     def push_to_github(self, created_slugs=None):
@@ -386,8 +361,7 @@ class TrendEngineV2:
             if os.path.exists(hub_file):
                 files_to_push.append((hub_file, "trends/index.html"))
             
-            # Add index.html and sitemap (always updated)
-            files_to_push.append((os.path.join(self.site_root, "index.html"), "index.html"))
+            # Add sitemap (always updated with new URLs)
             files_to_push.append((os.path.join(self.site_root, "sitemap.xml"), "sitemap.xml"))
             
             pushed_count = 0

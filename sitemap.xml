@@ -138,4 +138,11 @@
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <url>
+        <loc>https://angyone.com/trends/sensor-maker-luminar-technologies-files-/</loc>
+        <lastmod>2025-12-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>

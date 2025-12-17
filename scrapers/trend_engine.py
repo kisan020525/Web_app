@@ -304,9 +304,14 @@ class TrendEngineV2:
             content = f.read()
             
         new_entry = f"""
-        <div class="trend-card" style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 20px;">
-            <div style="font-size: 0.8rem; opacity: 0.6;">{date_str}</div>
+        <div class="trend-card">
+            <div class="trend-meta">
+                <span class="trend-badge">NEW</span>
+                <span class="trend-time">Published: {date_str}</span>
+            </div>
             <h3><a href="{link_href}">{topic}</a></h3>
+            <p class="trend-snippet">AI-generated analysis and insights on this trending topic. Click to read the full auto-report.</p>
+            <a href="{link_href}" class="read-more">Read Auto-Report →</a>
         </div>
         """
         

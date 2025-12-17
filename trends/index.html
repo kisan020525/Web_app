@@ -23,25 +23,44 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Premium Trend Card Design */
         .trend-card {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(99, 102, 241, 0.05) 100%);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 28px;
             margin-bottom: 24px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .trend-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+            border-color: #6366f1;
+        }
+
+        .trend-card:hover::before {
+            opacity: 1;
         }
 
         .trend-meta {
             font-size: 0.85rem;
             color: var(--text-body);
-            opacity: 0.8;
+            opacity: 0.7;
             margin-bottom: 12px;
             display: flex;
             gap: 12px;
@@ -49,34 +68,62 @@
         }
 
         .trend-badge {
-            background: #DEF7EC;
-            color: #03543F;
-            padding: 2px 8px;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .trend-title {
-            font-size: 1.5rem;
+        .trend-card h3 {
+            font-size: 1.35rem;
             margin-bottom: 12px;
-            line-height: 1.3;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .trend-card h3 a {
+            color: var(--text-heading);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .trend-card h3 a:hover {
+            color: #6366f1;
         }
 
         .trend-snippet {
             color: var(--text-body);
             margin-bottom: 16px;
             line-height: 1.6;
+            opacity: 0.85;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #6366f1;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: gap 0.2s ease;
+        }
+
+        .read-more:hover {
+            gap: 10px;
         }
 
         .live-indicator {
             display: inline-block;
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             background-color: #ef4444;
             border-radius: 50%;
-            margin-right: 6px;
+            margin-right: 8px;
             animation: pulse 2s infinite;
         }
 
@@ -86,12 +133,38 @@
             }
 
             70% {
-                box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+                box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
             }
 
             100% {
                 box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
             }
+        }
+
+        /* Stats counter */
+        .stats-bar {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #6366f1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -174,21 +247,28 @@
 
             <!-- Dynamic Feed Placeholder -->
             <div id="trend-feed">
-        <div class="trend-card" style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 20px;">
-            <div style="font-size: 0.8rem; opacity: 0.6;">2025-12-17</div>
-            <h3><a href="ai-decodes-metasurface-genome,-achieving/">AI Decodes Metasurface Genome, Achieving 3% Precision With Meta-GPT Technology</a></h3>
-        </div>
-        
-        <div class="trend-card" style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 20px;">
-            <div style="font-size: 0.8rem; opacity: 0.6;">2025-12-17</div>
-            <h3><a href="elon-musks-space-based-ai-revolution-is-/">Elon Musks Space Based AI Revolution Is A Threat India Must Prepare For</a></h3>
-        </div>
-        
-        <div class="trend-card" style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 20px;">
-            <div style="font-size: 0.8rem; opacity: 0.6;">2025-12-16</div>
-            <h3><a href="hologic’s-ai-powered-mammography-technol/">Hologic’s AI-Powered Mammography Technology Flagged a Third of Breast Cancer Cases Initially Interpreted as Negative in Study of 7,500 Screening Exams</a></h3>
-        </div>
-        
+                <div class="trend-card"
+                    style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 20px;">
+                    <div style="font-size: 0.8rem; opacity: 0.6;">2025-12-17</div>
+                    <h3><a href="ai-decodes-metasurface-genome,-achieving/">AI Decodes Metasurface Genome, Achieving 3%
+                            Precision With Meta-GPT Technology</a></h3>
+                </div>
+
+                <div class="trend-card"
+                    style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 20px;">
+                    <div style="font-size: 0.8rem; opacity: 0.6;">2025-12-17</div>
+                    <h3><a href="elon-musks-space-based-ai-revolution-is-/">Elon Musks Space Based AI Revolution Is A
+                            Threat India Must Prepare For</a></h3>
+                </div>
+
+                <div class="trend-card"
+                    style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 20px;">
+                    <div style="font-size: 0.8rem; opacity: 0.6;">2025-12-16</div>
+                    <h3><a href="hologic’s-ai-powered-mammography-technol/">Hologic’s AI-Powered Mammography Technology
+                            Flagged a Third of Breast Cancer Cases Initially Interpreted as Negative in Study of 7,500
+                            Screening Exams</a></h3>
+                </div>
+
 
 
                 <div class="trend-card"

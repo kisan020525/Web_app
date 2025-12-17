@@ -110,4 +110,11 @@
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <url>
+        <loc>https://angyone.com/trends/uk-insists-us-tech-deal-not-dead-as-trum/</loc>
+        <lastmod>2025-12-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>

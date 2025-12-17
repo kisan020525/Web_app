@@ -261,7 +261,7 @@ h5 {
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 800;
     color: var(--text-main);
     letter-spacing: -0.02em;
@@ -1428,7 +1428,9 @@ footer {
     .newsletter-btn {
         width: 100%;
     }
-}/* 6. Audience Section (PartnerStack Optimization) */
+}
+
+/* 6. Audience Section (PartnerStack Optimization) */
 .audience-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

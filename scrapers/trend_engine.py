@@ -180,7 +180,14 @@ class TrendEngineV2:
             return
 
         date_str = datetime.datetime.now().strftime("%Y-%m-%d")
-        slug = topic.lower().replace(" ", "-").replace("/", "-").replace(".", "")[:40]
+        
+        # Create URL-safe slug (remove all Windows-invalid characters)
+        import re
+        slug = topic.lower()
+        slug = re.sub(r'[:\'"*?<>|/\\]', '', slug)  # Remove invalid Windows chars
+        slug = slug.replace(" ", "-").replace(".", "")
+        slug = re.sub(r'-+', '-', slug)  # Remove duplicate dashes
+        slug = slug.strip('-')[:40]  # Trim and limit length
         
         # 1. Create Directory for Clean URL: trends/slug/
         page_dir = os.path.join(self.trends_dir, slug)

@@ -498,13 +498,57 @@
                     style="max-width: 600px; margin-left: auto; margin-right: auto; color: var(--text-body);">
                     Get the latest AI tools and software insights delivered to your inbox. No spam, just value.
                 </p>
-                <form onsubmit="event.preventDefault(); alert('Subscribed! (Integration pending)');"
-                    style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                    <input type="email" placeholder="Enter your work email" class="hero-search-input"
+                <form id="newsletter-form" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <input type="email" id="subscriber-email" placeholder="Enter your work email"
+                        class="hero-search-input"
                         style="background: var(--bg-main); border: 1px solid var(--border); width: 300px; flex-grow: 0;"
                         required>
-                    <button type="submit" class="hero-search-btn">Subscribe Free</button>
+                    <button type="submit" class="hero-search-btn" id="subscribe-btn">Subscribe Free</button>
                 </form>
+                <p id="subscribe-message" style="font-size: 0.9rem; margin-top: 12px; display: none;"></p>
+
+                <script>
+                    document.getElementById('newsletter-form').addEventListener('submit', async function (e) {
+                        e.preventDefault();
+                        const email = document.getElementById('subscriber-email').value;
+                        const btn = document.getElementById('subscribe-btn');
+                        const msg = document.getElementById('subscribe-message');
+
+                        btn.disabled = true;
+                        btn.textContent = 'Subscribing...';
+
+                        try {
+                            const response = await fetch('https://ecjmiokutdujydkfarxq.supabase.co/rest/v1/email_subscribers', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjam1pb2t1dGR1anlka2ZhcnhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwNjQ5NzUsImV4cCI6MjA4MTY0MDk3NX0.ln5XBi1v5vW85yKdbOtnEgwcdxyR_HSF8-U5XZbsNGQ',
+                                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjam1pb2t1dGR1anlka2ZhcnhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwNjQ5NzUsImV4cCI6MjA4MTY0MDk3NX0.ln5XBi1v5vW85yKdbOtnEgwcdxyR_HSF8-U5XZbsNGQ',
+                                    'Prefer': 'return=minimal'
+                                },
+                                body: JSON.stringify({ email: email, source: 'homepage' })
+                            });
+
+                            if (response.ok || response.status === 201) {
+                                msg.style.color = '#10B981';
+                                msg.textContent = '✓ Welcome to the inner circle! Check your inbox.';
+                                document.getElementById('subscriber-email').value = '';
+                            } else if (response.status === 409) {
+                                msg.style.color = '#F59E0B';
+                                msg.textContent = 'You\'re already subscribed!';
+                            } else {
+                                throw new Error('Failed');
+                            }
+                        } catch (err) {
+                            msg.style.color = '#EF4444';
+                            msg.textContent = 'Something went wrong. Please try again.';
+                        }
+
+                        msg.style.display = 'block';
+                        btn.disabled = false;
+                        btn.textContent = 'Subscribe Free';
+                    });
+                </script>
                 <p style="font-size: 0.85rem; margin-top: 16px; opacity: 0.6;">Join 5,000+ software decision makers.</p>
             </div>
         </div>

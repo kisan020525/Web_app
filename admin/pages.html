@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Pages - AngyOne Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" href="../assets/img/logo.png">
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h1>📊 AngyOne <span>ADMIN</span></h1>
+            </div>
+
+            <nav class="nav-section">
+                <div class="nav-label">Main</div>
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">🏠</span> Dashboard
+                </a>
+                <a href="generate.html" class="nav-item">
+                    <span class="nav-icon">✨</span> Generate Content
+                </a>
+            </nav>
+
+            <nav class="nav-section">
+                <div class="nav-label">Content</div>
+                <a href="pages.html" class="nav-item active">
+                    <span class="nav-icon">📄</span> All Pages
+                </a>
+                <a href="subscribers.html" class="nav-item">
+                    <span class="nav-icon">✉️</span> Subscribers
+                </a>
+            </nav>
+
+            <nav class="nav-section" style="margin-top: auto; padding-top: 24px; border-top: 1px solid var(--border);">
+                <a href="../index.html" class="nav-item" target="_blank">
+                    <span class="nav-icon">🌐</span> View Site
+                </a>
+                <a href="#" class="nav-item" onclick="logout()">
+                    <span class="nav-icon">🚪</span> Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">📄 All Pages</h1>
+                <p class="page-subtitle">Manage your published content</p>
+            </div>
+
+            <!-- Trend Articles -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Trend Articles</h3>
+                    <a href="generate.html" class="btn btn-primary btn-sm">+ New Article</a>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Folder</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trend-articles">
+                            <tr>
+                                <td>UK Insists US Tech Deal Not Dead Amid Trump Penalty Threats</td>
+                                <td style="color: var(--text-muted); font-family: monospace; font-size: 0.85rem;">
+                                    /trends/uk-insists-us-tech-deal/</td>
+                                <td><span class="badge badge-success">Published</span></td>
+                                <td>
+                                    <a href="../trends/uk-insists-us-tech-deal/" class="btn btn-ghost btn-sm"
+                                        target="_blank">View</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>The Great AI Hype Correction of 2025</td>
+                                <td style="color: var(--text-muted); font-family: monospace; font-size: 0.85rem;">
+                                    /trends/the-great-ai-hype-correction/</td>
+                                <td><span class="badge badge-success">Published</span></td>
+                                <td>
+                                    <a href="../trends/the-great-ai-hype-correction/" class="btn btn-ghost btn-sm"
+                                        target="_blank">View</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Static Pages -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Static Pages</h3>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th>Path</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Homepage</td>
+                                <td style="color: var(--text-muted); font-family: monospace; font-size: 0.85rem;">
+                                    /index.html</td>
+                                <td><a href="../index.html" class="btn btn-ghost btn-sm" target="_blank">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>Brevo Review</td>
+                                <td style="color: var(--text-muted); font-family: monospace; font-size: 0.85rem;">
+                                    /brevo/</td>
+                                <td><a href="../brevo/" class="btn btn-ghost btn-sm" target="_blank">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>ElevenLabs Review</td>
+                                <td style="color: var(--text-muted); font-family: monospace; font-size: 0.85rem;">
+                                    /elevenlabs/</td>
+                                <td><a href="../elevenlabs/" class="btn btn-ghost btn-sm" target="_blank">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>Trends Hub</td>
+                                <td style="color: var(--text-muted); font-family: monospace; font-size: 0.85rem;">
+                                    /trends/</td>
+                                <td><a href="../trends/" class="btn btn-ghost btn-sm" target="_blank">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>Guides Hub</td>
+                                <td style="color: var(--text-muted); font-family: monospace; font-size: 0.85rem;">
+                                    /guides/</td>
+                                <td><a href="../guides/" class="btn btn-ghost btn-sm" target="_blank">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>Comparisons Hub</td>
+                                <td style="color: var(--text-muted); font-family: monospace; font-size: 0.85rem;">
+                                    /comparisons/</td>
+                                <td><a href="../comparisons/" class="btn btn-ghost btn-sm" target="_blank">View</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 24px;">
+                💡 <strong>Tip:</strong> To delete a page, remove its folder from GitHub. To edit, download the HTML,
+                modify, and re-upload.
+            </p>
+        </main>
+    </div>
+
+    <script>
+        if (sessionStorage.getItem('admin_auth') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            sessionStorage.removeItem('admin_auth');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AngyOne Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" href="../assets/img/logo.png">
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h1>📊 AngyOne <span>ADMIN</span></h1>
+            </div>
+
+            <nav class="nav-section">
+                <div class="nav-label">Main</div>
+                <a href="index.html" class="nav-item active">
+                    <span class="nav-icon">🏠</span> Dashboard
+                </a>
+                <a href="generate.html" class="nav-item">
+                    <span class="nav-icon">✨</span> Generate Content
+                </a>
+            </nav>
+
+            <nav class="nav-section">
+                <div class="nav-label">Content</div>
+                <a href="pages.html" class="nav-item">
+                    <span class="nav-icon">📄</span> All Pages
+                </a>
+                <a href="subscribers.html" class="nav-item">
+                    <span class="nav-icon">✉️</span> Subscribers
+                </a>
+            </nav>
+
+            <nav class="nav-section" style="margin-top: auto; padding-top: 24px; border-top: 1px solid var(--border);">
+                <a href="../index.html" class="nav-item" target="_blank">
+                    <span class="nav-icon">🌐</span> View Site
+                </a>
+                <a href="#" class="nav-item" onclick="logout()">
+                    <span class="nav-icon">🚪</span> Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-subtitle">Welcome back! Here's an overview of your site.</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Trend Articles</div>
+                    <div class="stat-value" id="stat-articles">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Subscribers</div>
+                    <div class="stat-value" id="stat-subscribers">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Pages</div>
+                    <div class="stat-value" id="stat-pages">-</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Quick Actions</h3>
+                </div>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <a href="generate.html" class="btn btn-primary">✨ Generate New Article</a>
+                    <a href="pages.html" class="btn btn-ghost">📄 Manage Pages</a>
+                    <a href="subscribers.html" class="btn btn-ghost">✉️ View Subscribers</a>
+                </div>
+            </div>
+
+            <!-- Recent Articles -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Trend Articles</h3>
+                    <a href="pages.html" class="btn btn-ghost btn-sm">View All</a>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-articles">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: var(--text-muted);">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Auth check
+        if (sessionStorage.getItem('admin_auth') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            sessionStorage.removeItem('admin_auth');
+            window.location.href = 'login.html';
+        }
+
+        // Load stats
+        async function loadStats() {
+            // Count subscribers from Supabase
+            try {
+                const response = await fetch('https://ecjmiokutdujydkfarxq.supabase.co/rest/v1/email_subscribers?select=id', {
+                    headers: {
+                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjam1pb2t1dGR1anlka2ZhcnhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwNjQ5NzUsImV4cCI6MjA4MTY0MDk3NX0.ln5XBi1v5vW85yKdbOtnEgwcdxyR_HSF8-U5XZbsNGQ'
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('stat-subscribers').textContent = data.length;
+                }
+            } catch (e) {
+                document.getElementById('stat-subscribers').textContent = '0';
+            }
+
+            // Placeholder for other stats
+            document.getElementById('stat-articles').textContent = '5';
+            document.getElementById('stat-pages').textContent = '12';
+        }
+
+        // Load recent articles (placeholder)
+        function loadRecentArticles() {
+            const tbody = document.getElementById('recent-articles');
+            const articles = [
+                { title: 'UK Insists US Tech Deal Not Dead', date: 'Dec 16, 2025', status: 'Published' },
+                { title: 'AI Hype Correction 2025', date: 'Dec 15, 2025', status: 'Published' },
+                { title: 'Mustafa Suleyman Interview', date: 'Dec 14, 2025', status: 'Published' }
+            ];
+
+            tbody.innerHTML = articles.map(a => `
+                <tr>
+                    <td>${a.title}</td>
+                    <td style="color: var(--text-muted);">${a.date}</td>
+                    <td><span class="badge badge-success">${a.status}</span></td>
+                    <td>
+                        <button class="btn btn-ghost btn-sm">View</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        loadStats();
+        loadRecentArticles();
+    </script>
+</body>
+
+</html>

@@ -173,4 +173,11 @@
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <url>
+        <loc>https://angyone.com/trends/trump-media-announces-$6-billion-merger-/</loc>
+        <lastmod>2025-12-19</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>

@@ -236,4 +236,11 @@
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <url>
+        <loc>https://angyone.com/trends/ex-nvidia-billionaire-unveils-new-ai-chi/</loc>
+        <lastmod>2025-12-20</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>

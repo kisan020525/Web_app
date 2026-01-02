@@ -404,4 +404,11 @@
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <url>
+        <loc>https://angyone.com/trends/shanghai-biren-technology-surges-82%-on-/</loc>
+        <lastmod>2026-01-02</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>
